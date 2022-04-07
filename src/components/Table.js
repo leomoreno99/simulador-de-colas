@@ -73,7 +73,9 @@ export const Table = ({datos}) => {
                   background: "aliceblue",
                   color: "black",
                   fontWeight: "bold",
-                  paddingRight: '50px'
+                  paddingRight: '50px',
+                  position: 'sticky',
+                  top: '0px'
                 }}
               >
                 {column.render("Header")}

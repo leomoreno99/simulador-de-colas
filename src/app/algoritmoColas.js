@@ -2,6 +2,7 @@ const algoritmoColas = (datos) => {
   // const s = 1;
   let i = 0;
   let aux = false;
+  let s = 1;
 
   let {
     iteracion,
@@ -10,8 +11,10 @@ const algoritmoColas = (datos) => {
     proxFinServ,
     q,
     ps,
-    intervLlegCl,
-    intervServ,
+    intervLlegClMin,
+    intervLlegClMax,
+    intervServMin,
+    intervServMax
   } = datos;
 
   hInicial = hInicial * 60 * 60;
@@ -21,12 +24,12 @@ const algoritmoColas = (datos) => {
   const eventoProxLlegadaCliente = () => {
     if (ps === 0) {
       ps = 1;
-      proxFinServ = proxLlegCl + intervServ;
+      proxFinServ = proxLlegCl + numAleatorio(intervServMin, intervServMax);
       aux = false;
     } else {
       q += 1;
     }
-    proxLlegCl = proxLlegCl + intervLlegCl;
+    proxLlegCl = proxLlegCl + numAleatorio(intervLlegClMin, intervLlegClMax);
   };
 
   const eventoProxFinServ = () => {
@@ -34,11 +37,10 @@ const algoritmoColas = (datos) => {
     if (q > 0) {
       ps = 1;
       q -= 1;
-      console.log("antes: ", proxFinServ);
-      proxFinServ = proxFinServ + intervServ;
-      console.log("despues: ", proxFinServ);
+      proxFinServ = proxFinServ + numAleatorio(intervServMin, intervServMax);
     } else {
-      proxFinServ = proxFinServ * 2;
+      // proxFinServ = proxFinServ * 2;
+      proxFinServ = null
       aux = true;
     }
   };
@@ -61,6 +63,11 @@ const algoritmoColas = (datos) => {
     return `${horas}:${minutos}:${segundos}`;
   };
 
+  const numAleatorio = (min, max) => {
+    max++
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
   const principal = () => {
     const data = [];
 
@@ -75,7 +82,7 @@ const algoritmoColas = (datos) => {
       };
 
       data.push(fila);
-      if (proxLlegCl <= proxFinServ) {
+      if ( (proxFinServ == null) || (proxLlegCl <= proxFinServ)) {
         hInicial = proxLlegCl;
         eventoProxLlegadaCliente();
       } else {
@@ -88,7 +95,6 @@ const algoritmoColas = (datos) => {
     i = 0;
     return data;
   };
-
   return principal();
 };
 

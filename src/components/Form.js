@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import algoritmoColas from "../app/algoritmoColas";
 
 export function Form({ getDatos }) {
-  const [iteracion, setIteracion] = useState(0);
-  const [hInicial, setHInicial] = useState(0);
-  const [proxLlegCl, setProxLlegCl] = useState(0);
-  const [proxFinServ, setProxFinServ] = useState(0);
-  const [q, setQ] = useState(0);
-  const [ps, setPs] = useState(0);
-  const [intervLlegCl, setIntervLlegCl] = useState(0);
-  const [intervServ, setIntervServ] = useState(0);
+  const [iteracion, setIteracion] = useState('');
+  const [hInicial, setHInicial] = useState('');
+  const [proxLlegCl, setProxLlegCl] = useState('');
+  const [proxFinServ, setProxFinServ] = useState('');
+  const [q, setQ] = useState('');
+  const [ps, setPs] = useState('');
+  const [intervLlegClMin, setIntervLlegClMin] = useState('');
+  const [intervLlegClMax, setIntervLlegClMax] = useState('');
+  const [intervServMin, setIntervServMin] = useState('');
+  const [intervServMax, setIntervServMax] = useState('');
 
   const onChangeIteracion = (e) => {
     setIteracion(numberConverter(e.target.value));
@@ -35,12 +37,20 @@ export function Form({ getDatos }) {
     setPs(numberConverter(e.target.value));
   };
 
-  const onChangeIntervLlegCl = (e) => {
-    setIntervLlegCl(numberConverter(e.target.value));
+  const onChangeIntervLlegClMin = (e) => {
+    setIntervLlegClMin(numberConverter(e.target.value));
   };
 
-  const onChangeIntervServ = (e) => {
-    setIntervServ(numberConverter(e.target.value));
+  const onChangeIntervLlegClMax = (e) => {
+    setIntervLlegClMax(numberConverter(e.target.value));
+  };
+
+  const onChangeIntervServMin = (e) => {
+    setIntervServMin(numberConverter(e.target.value));
+  };
+
+  const onChangeIntervServMax = (e) => {
+    setIntervServMax(numberConverter(e.target.value));
   };
 
   const numberConverter = (string) => {
@@ -48,7 +58,6 @@ export function Form({ getDatos }) {
   };
 
   const obtenerDatos = (datos) => {
-    console.log(datos);
     return algoritmoColas(datos);
   };
 
@@ -72,15 +81,21 @@ export function Form({ getDatos }) {
       <div>Estado del puesto de servicio (1 = ocupado)</div>
       <input type="number" value={ps} onChange={onChangePs} />
 
-      <div>Intervalo de Llegada de un cliente (s)</div>
+      <div>Intervalo de Llegada de un cliente (s | min - max)</div>
       <input
         type="number"
-        value={intervLlegCl}
-        onChange={onChangeIntervLlegCl}
+        value={intervLlegClMin}
+        onChange={onChangeIntervLlegClMin}
+      />
+      <input
+        type="number"
+        value={intervLlegClMax}
+        onChange={onChangeIntervLlegClMax}
       />
 
-      <div>Intervalo de servicio (s)</div>
-      <input type="number" value={intervServ} onChange={onChangeIntervServ} />
+      <div>Intervalo de servicio (s | min - max)</div>
+      <input type="number" value={intervServMin} onChange={onChangeIntervServMin} />
+      <input type="number" value={intervServMax} onChange={onChangeIntervServMax} />
 
       <button
         onClick={() => {
@@ -91,8 +106,10 @@ export function Form({ getDatos }) {
             proxFinServ,
             q,
             ps,
-            intervLlegCl,
-            intervServ,
+            intervLlegClMin,
+            intervLlegClMax,
+            intervServMin,
+            intervServMax,
           };
           const datos = obtenerDatos(form);
           getDatos(datos);

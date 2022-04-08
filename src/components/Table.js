@@ -46,12 +46,24 @@ export const Table = ({datos}) => {
         accessor: "col4",
       },
       {
-        Header: "Q",
+        Header: "Hora de comienzo de descanso",
         accessor: "col5",
       },
       {
-        Header: "PS",
+        Header: "Hora de vuelta al trabajo",
         accessor: "col6",
+      },
+      {
+        Header: "Q",
+        accessor: "col7",
+      },
+      {
+        Header: "PS",
+        accessor: "col8",
+      },
+      {
+        Header: "S",
+        accessor: "col9",
       },
     ],
     []

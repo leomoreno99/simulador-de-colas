@@ -2,7 +2,7 @@ const algoritmoColas = (datos) => {
   // const s = 1;
   let i = 0;
   let aux = false;
-  let s = 1;
+  // let s = 1;
 
   let {
     iteracion,
@@ -17,9 +17,11 @@ const algoritmoColas = (datos) => {
     intervServMax
   } = datos;
 
-  hInicial = hInicial * 60 * 60;
-  proxLlegCl = hInicial + proxLlegCl;
-  proxFinServ = hInicial + proxFinServ;
+  // hInicial = hInicial * 60 * 60;
+  // proxLlegCl = hInicial + proxLlegCl;
+  // proxFinServ = hInicial + proxFinServ;
+
+  console.log(intervLlegClMin)
 
   const eventoProxLlegadaCliente = () => {
     if (ps === 0) {
@@ -58,6 +60,10 @@ const algoritmoColas = (datos) => {
       segundos = Math.round(seg % 0x3c).toString();
       horas = Math.floor(seg / 0xe10).toString();
       minutos = (Math.floor(seg / 0x3c) % 0x3c).toString();
+    }
+
+    if (horas > 24){
+      horas = horas - 25
     }
 
     return `${horas}:${minutos}:${segundos}`;

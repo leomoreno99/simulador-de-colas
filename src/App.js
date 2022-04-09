@@ -11,10 +11,10 @@ function App() {
   };
 
   return (
-    <>
+    <div className="container">
       <Form getDatos={getDatos} />
       <Table datos={datos} />
-    </>
+    </div>
   );
 }
 

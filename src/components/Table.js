@@ -1,13 +1,35 @@
 import React from "react";
 import { useTable } from "react-table";
+import styled from "styled-components";
 
+const TableStyles = styled.div`
+  .table {
+    margin: 0 auto 20px auto;
+  }
 
+  .column_title {
+    border-bottom: solid 3px red;
+    background: white;
+    color: #3f51b5;
+    padding: 4px 10px;
+    border: 2px solid transparent;
+    border-radius: 5px 5px 0 0;
+    font-weight: bold;
+    position: sticky;
+    top: 0px;
+  }
 
-export const Table = ({datos}) => {
+  .cell {
+    padding: 10px;
+    background: white;
+    border: 2px solid transparent;
+  }
+`;
 
-    // console.log('LAPUTAMADRE: ', datos)
+export const Table = ({ datos }) => {
+  // console.log('LAPUTAMADRE: ', datos)
 
-    // console.log(datos)
+  // console.log(datos)
   //   const data = React.useMemo(() => [
   //       {
   //         col1: "Hello",
@@ -39,7 +61,7 @@ export const Table = ({datos}) => {
       },
       {
         Header: "Hora de proxima llegada",
-        accessor: "col3", 
+        accessor: "col3",
       },
       {
         Header: "Hora de proximo fin de servicio",
@@ -61,52 +83,36 @@ export const Table = ({datos}) => {
     useTable({ columns, data });
 
   return (
-    <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
-      <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th
-                {...column.getHeaderProps()}
-                style={{
-                  borderBottom: "solid 3px red",
-                  background: "aliceblue",
-                  color: "black",
-                  fontWeight: "bold",
-                  paddingRight: '50px',
-                  position: 'sticky',
-                  top: '0px'
-                }}
-              >
-                {column.render("Header")}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => {
-                return (
-                  <td
-                    {...cell.getCellProps()}
-                    style={{
-                      padding: "10px",
-                      border: "solid 1px gray",
-                      background: "papayawhip",
-                    }}
-                  >
-                    {cell.render("Cell")}
-                  </td>
-                );
-              })}
+    <TableStyles>
+      <table {...getTableProps()} className='table' >
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()} className="column_title">
+                  {column.render("Header")}
+                </th>
+              ))}
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => {
+                  return (
+                    <td {...cell.getCellProps()} className="cell">
+                      {cell.render("Cell")}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </TableStyles>
   );
 };

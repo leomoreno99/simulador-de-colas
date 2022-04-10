@@ -62,8 +62,8 @@ const algoritmoColas = (datos) => {
       minutos = (Math.floor(seg / 0x3c) % 0x3c).toString();
     }
 
-    if (horas > 24){
-      horas = horas - 25
+    if (horas > 23){
+      horas = horas - 24
     }
 
     return `${horas}:${minutos}:${segundos}`;

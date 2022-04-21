@@ -4,6 +4,7 @@ import Picker from "./Picker";
 import styled from "styled-components";
 import { Subtitle } from "./Subtitle";
 import Button from "./Button";
+import setVariables from "../app/setVariables";
 
 const StyleForm = styled.div`
   display: flex;
@@ -20,6 +21,11 @@ const StyleForm = styled.div`
     display: inline;
     margin-right: 5px;
     color: #3f51b5;
+  }
+
+  .button_group {
+    display: flex;
+    gap: 1rem;
   }
 
   .pickers_container {
@@ -42,7 +48,7 @@ const StyleForm = styled.div`
 
 `;
 
-export function Form({ getDatos }) {
+export function Form({ getDatos, getTableEntry }) {
   const [iteracion, setIteracion] = useState(0);
   const [hInicial, setHInicial] = useState("");
   const [proxLlegCl, setProxLlegCl] = useState("");
@@ -74,11 +80,20 @@ export function Form({ getDatos }) {
     return algoritmoColas(datos);
   };
 
+  const changeVariables = (problemNumber) => {
+    setVariables(problemNumber)
+  }
+
   return (
     <StyleForm>
       <div>
         <h1>Simulador de colas</h1>
         <p>(Problema 1)</p>
+      </div>
+
+      <div className="button_group" >
+        <Button text='Problema 1' onClick={() => changeVariables(1)} />
+        <Button text='Problema 2' onClick={() => changeVariables(2)} />
       </div>
       
       <div>

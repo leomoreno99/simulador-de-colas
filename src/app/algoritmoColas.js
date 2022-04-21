@@ -21,7 +21,7 @@ const algoritmoColas = (datos) => {
   // proxLlegCl = hInicial + proxLlegCl;
   // proxFinServ = hInicial + proxFinServ;
 
-  console.log(intervLlegClMin)
+  // console.log(intervLlegClMin)
 
   const eventoProxLlegadaCliente = () => {
     if (ps === 0) {

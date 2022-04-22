@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { Subtitle } from "./Subtitle";
 import Button from "./Button";
 import setVariables from "../app/setVariables";
+import algoritmoColasP2 from "../app/algoritmoColasP2";
+import algoritmoColasP3 from "../app/algoritmoColasP3";
 
 const StyleForm = styled.div`
   display: flex;
@@ -46,7 +48,23 @@ const StyleForm = styled.div`
     font-size: 1rem;
   }
 
+  .p2 {
+    display: ${props => props.displayProp};
+  }
+
+  .p3 {
+    display: ${props => props.displayP3};
+  }
+  
+
 `;
+
+
+let colVP3 = 1
+
+export const getColVP3 = (e) => {
+  colVP3 = e
+};
 
 export function Form({ getDatos, getTableEntry }) {
   const [iteracion, setIteracion] = useState(0);
@@ -60,6 +78,20 @@ export function Form({ getDatos, getTableEntry }) {
   const [intervServMin, setIntervServMin] = useState("");
   const [intervServMax, setIntervServMax] = useState("");
 
+  const [hComienzoDescanso, setHComienzoDescanso] = useState("");
+  const [hVueltaTrabajo, setHVueltaTrabajo] = useState("");
+  const [s, setS] = useState(0);
+  const [intervDTMin, setIntervDTMin] = useState("");
+  const [intervDTMax, setIntervDTMax] = useState("");
+  const [intervDDMin, setIntervDDMin] = useState("");
+  const [intervDDMax, setIntervDDMax] = useState("");
+
+  const [hProxAbCola, sethProxAbCola] = useState("");
+
+  const [numberProblem, setNumberProblem] = useState(1);
+  const [display, setDisplay] = useState('')
+  const [displayP3, setDisplayP3] = useState('')
+
   const onChangeIteracion = (e) => {
     setIteracion(numberConverter(e.target.value));
   };
@@ -72,28 +104,53 @@ export function Form({ getDatos, getTableEntry }) {
     setPs(numberConverter(e.target.value));
   };
 
+  const onChangeS = (e) => {
+    setS(numberConverter(e.target.value));
+  };
+
   const numberConverter = (string) => {
     return Number(string);
   };
 
   const obtenerDatos = (datos) => {
-    return algoritmoColas(datos);
+    if(numberProblem === 1){
+      return algoritmoColas(datos);
+    } else if (numberProblem === 2){
+      return algoritmoColasP2(datos);
+    } else if (numberProblem === 3){
+      return algoritmoColasP3(datos)
+    }
   };
 
-  const changeVariables = (problemNumber) => {
-    setVariables(problemNumber)
+  const changeVariables = (problemNumber, colVP3) => {
+    return setVariables(problemNumber,colVP3)
   }
 
   return (
-    <StyleForm>
+    <StyleForm displayProp={display} displayP3={displayP3} >
       <div>
         <h1>Simulador de colas</h1>
         <p>(Problema 1)</p>
       </div>
 
       <div className="button_group" >
-        <Button text='Problema 1' onClick={() => changeVariables(1)} />
-        <Button text='Problema 2' onClick={() => changeVariables(2)} />
+        <Button text='Problema 1' onClick={() => {
+          setNumberProblem(1)
+          getTableEntry(changeVariables(1))
+          setDisplay('none')
+          setDisplayP3('none')
+          }} />
+        <Button text='Problema 2' onClick={() => {
+          setNumberProblem(2)
+          getTableEntry(changeVariables(2))
+          setDisplay('')
+          setDisplayP3('none')
+          }} />
+          <Button text='Problema 3' onClick={() => {
+          setNumberProblem(3)
+          setDisplay('none')
+          setDisplayP3('')
+          }} />
       </div>
       
       <div>
@@ -110,6 +167,19 @@ export function Form({ getDatos, getTableEntry }) {
         </div>
       </div>
 
+      <div className='pickers_container p2'>
+        <div className="picker_group p2" >
+          <Picker getSeconds={setHComienzoDescanso} name="Hora de comienzo descanso" />
+          <Picker getSeconds={setHVueltaTrabajo} name="Hora de vuelta al trabajo" />
+        </div>
+      </div>
+
+      <div className='pickers_container p3'>
+        <div className="picker_group p3" >
+          <Picker getSeconds={sethProxAbCola} name="Hora de proximo abandono de cola" />
+        </div>
+      </div>
+
       <div>
         <Subtitle text="Cola inicial" />
         <input className="input__int" type="number" value={q} onChange={onChangeQ} />
@@ -120,12 +190,17 @@ export function Form({ getDatos, getTableEntry }) {
         <input className="input__int" type="number" value={ps} onChange={onChangePs} />
       </div>
 
+      <div className="p2" >
+        <Subtitle text="Estado inicial del servidor (1 = presente)" />
+        <input className="input__int" type="number" value={s} onChange={onChangeS} />
+      </div>
+
 
       <div className='pickers_container' >
         <Subtitle text="Intervalo de Llegada de un cliente (s)" />
         <div className="picker_group" >
-          <Picker getSeconds={setIntervLlegClMin} name="Min" formatTime="ss" />
-          <Picker getSeconds={setIntervLlegClMax} name="Max" formatTime="ss" />
+          <Picker getSeconds={setIntervLlegClMin} name="Min" />
+          <Picker getSeconds={setIntervLlegClMax} name="Max" />
         </div>
       </div>
       
@@ -134,6 +209,22 @@ export function Form({ getDatos, getTableEntry }) {
         <div className="picker_group" >
           <Picker getSeconds={setIntervServMin} name="Min" formatTime="ss" />
           <Picker getSeconds={setIntervServMax} name="Max" formatTime="ss" />
+        </div>
+      </div>
+
+      <div className='pickers_container p2' >
+        <Subtitle text="Intervalo de duracion de trabajo (s)" />
+        <div className="picker_group" >
+          <Picker getSeconds={setIntervDTMin} name="Min" formatTime="ss" />
+          <Picker getSeconds={setIntervDTMax} name="Max" formatTime="ss" />
+        </div>
+      </div>
+
+      <div className='pickers_container p2' >
+        <Subtitle text="Intervalo de duracion de descanso (s)" />
+        <div className="picker_group" >
+          <Picker getSeconds={setIntervDDMin} />
+          <Picker getSeconds={setIntervDDMax} />
         </div>
       </div>
       
@@ -150,8 +241,19 @@ export function Form({ getDatos, getTableEntry }) {
             intervLlegClMax,
             intervServMin,
             intervServMax,
+            s,
+            hComienzoDescanso,
+            hVueltaTrabajo,
+            intervDTMin,
+            intervDTMax,
+            intervDDMin,
+            intervDDMax,
+            hProxAbCola
           };
           const datos = obtenerDatos(form);
+          if(numberProblem === 3){
+            getTableEntry(changeVariables(3, colVP3))
+          } 
           getDatos(datos);
         }} />
     </StyleForm>

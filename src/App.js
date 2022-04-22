@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="container">
       <Form getDatos={getDatos} getTableEntry={getTableEntry} />
-      <Table datos={datos} />
+      <Table datos={datos} cabecera={tableEntry}/>
     </div>
   );
 }

@@ -26,7 +26,7 @@ const TableStyles = styled.div`
   }
 `;
 
-export const Table = ({ datos }) => {
+export const Table = ({ datos, cabecera }) => {
   // console.log('LAPUTAMADRE: ', datos)
 
   // console.log(datos)
@@ -49,35 +49,7 @@ export const Table = ({ datos }) => {
 
   const data = React.useMemo(() => datos, [datos]);
 
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Nro Iteracion",
-        accessor: "col1",
-      },
-      {
-        Header: "Hora Actual",
-        accessor: "col2",
-      },
-      {
-        Header: "Hora de proxima llegada",
-        accessor: "col3",
-      },
-      {
-        Header: "Hora de proximo fin de servicio",
-        accessor: "col4",
-      },
-      {
-        Header: "Q",
-        accessor: "col5",
-      },
-      {
-        Header: "PS",
-        accessor: "col6",
-      },
-    ],
-    []
-  );
+  const columns = React.useMemo(() => cabecera,[cabecera]);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data });

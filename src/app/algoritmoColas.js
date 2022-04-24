@@ -3,6 +3,8 @@ const algoritmoColas = (datos) => {
   let i = 0;
   let aux = false;
   // let s = 1;
+  let tiempoLlegada = 0
+  let tiempoServicio = 0
 
   let {
     iteracion,
@@ -24,22 +26,25 @@ const algoritmoColas = (datos) => {
   // console.log(intervLlegClMin)
 
   const eventoProxLlegadaCliente = () => {
+    tiempoLlegada = numAleatorio(intervLlegClMin, intervLlegClMax)
+    tiempoServicio = numAleatorio(intervServMin, intervServMax)
     if (ps === 0) {
       ps = 1;
-      proxFinServ = proxLlegCl + numAleatorio(intervServMin, intervServMax);
+      proxFinServ = proxLlegCl + tiempoServicio;
       aux = false;
     } else {
       q += 1;
     }
-    proxLlegCl = proxLlegCl + numAleatorio(intervLlegClMin, intervLlegClMax);
+    proxLlegCl = proxLlegCl + tiempoLlegada;
   };
 
   const eventoProxFinServ = () => {
+    tiempoServicio = numAleatorio(intervServMin, intervServMax)
     ps = 0;
     if (q > 0) {
       ps = 1;
       q -= 1;
-      proxFinServ = proxFinServ + numAleatorio(intervServMin, intervServMax);
+      proxFinServ = proxFinServ + tiempoServicio;
     } else {
       // proxFinServ = proxFinServ * 2;
       proxFinServ = null
@@ -63,11 +68,12 @@ const algoritmoColas = (datos) => {
     }
 
     if (horas > 23){
-      horas = horas - 24
+      horas = horas % 24
     }
 
     return `${horas}:${minutos}:${segundos}`;
   };
+
 
   const numAleatorio = (min, max) => {
     max++
@@ -77,6 +83,10 @@ const algoritmoColas = (datos) => {
   const principal = () => {
     const data = [];
 
+    if (ps === 0){
+      aux = true
+    }
+
     do {
       const fila = {
         col1: i + 1,
@@ -85,6 +95,8 @@ const algoritmoColas = (datos) => {
         col4: convertir(proxFinServ, aux),
         col5: q,
         col6: ps,
+        col7: tiempoLlegada,
+        col8: tiempoServicio
       };
 
       data.push(fila);

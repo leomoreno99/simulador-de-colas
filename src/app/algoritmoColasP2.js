@@ -4,10 +4,11 @@ const algoritmoColasP2 = (datos) => {
     let aux = false;
     let auxCD = false
     let auxVT = false
-    // let s = 1;
-  
-    // let t = 60
-    // let d = 30
+
+    let tiempoLlegada = 0
+    let tiempoServicio = 0
+    let tiempoTrabajo = 0
+    let tiempoDescanso = 0
   
     let {
       iteracion,
@@ -29,39 +30,32 @@ const algoritmoColasP2 = (datos) => {
       intervDDMax
     } = datos;
   
-    // hInicial = hInicial * 60 * 60;
-    
-    // hInicial = (hInicial * 60 * 60);
-    // proxLlegCl = hInicial + proxLlegCl;
-    // proxFinServ = hInicial + proxFinServ;
-  
-    // let hComienzoDescanso = hInicial + 1
-    // let hVueltaTrabajo = hInicial * 2
-    // console.log('hi: ', hInicial, 'hcd: ', hComienzoDescanso)
-  
     const eventoProxLlegadaCliente = () => {
+      tiempoServicio = numAleatorio(intervServMin, intervServMax)
+      tiempoLlegada = numAleatorio(intervLlegClMin, intervLlegClMax)
       hInicial = proxLlegCl;
       if (ps === 0) {
         ps = 1;
         if ( s === 0) {
-          proxFinServ = hVueltaTrabajo + numAleatorio(intervServMin, intervServMax);
+          proxFinServ = hVueltaTrabajo + tiempoServicio;
         } else {
-          proxFinServ = proxLlegCl + numAleatorio(intervServMin, intervServMax);
+          proxFinServ = proxLlegCl + tiempoServicio;
         }
         aux = false;
       } else {
         q += 1;
       }
-      proxLlegCl = proxLlegCl + numAleatorio(intervLlegClMin, intervLlegClMax);
+      proxLlegCl = proxLlegCl + tiempoLlegada;
     };
   
     const eventoProxFinServ = () => {
+      tiempoServicio = numAleatorio(intervServMin, intervServMax)
       hInicial = proxFinServ;
       ps = 0;
       if (q > 0) {
         ps = 1;
         q -= 1;
-        proxFinServ = proxFinServ + numAleatorio(intervServMin, intervServMax);
+        proxFinServ = proxFinServ + tiempoServicio;
       } else {
         proxFinServ = proxFinServ * 2;
         // proxFinServ = null
@@ -70,12 +64,12 @@ const algoritmoColasP2 = (datos) => {
     };
     
     const eventoSalidaServidor = () => {
+      tiempoDescanso = numAleatorio(intervDDMin, intervDDMax)
       hInicial = hComienzoDescanso
       s = 0
-      const t = numAleatorio(intervDDMin, intervDDMax)
-      hVueltaTrabajo = hComienzoDescanso + t
+      hVueltaTrabajo = hComienzoDescanso + tiempoDescanso
       if (ps !== 0){
-        proxFinServ += t
+        proxFinServ += tiempoDescanso
       }
       hComienzoDescanso = hComienzoDescanso * 2
       auxCD = true
@@ -83,9 +77,10 @@ const algoritmoColasP2 = (datos) => {
     }
   
     const eventoRegresoServidor = () => {
+      tiempoTrabajo = numAleatorio(intervDTMin, intervDTMax)
       hInicial = hVueltaTrabajo
       s = 1
-      hComienzoDescanso = hInicial + numAleatorio(intervDTMin, intervDTMax)
+      hComienzoDescanso = hInicial + tiempoTrabajo
       hVueltaTrabajo = hVueltaTrabajo * 2
       auxCD = false
       auxVT = true
@@ -107,7 +102,7 @@ const algoritmoColasP2 = (datos) => {
       }
   
       if (horas > 23){
-        horas = horas - 24
+        horas = horas % 24
       }
   
       return `${horas}:${minutos}:${segundos}`;
@@ -141,6 +136,10 @@ const algoritmoColasP2 = (datos) => {
           col7: q,
           col8: ps,
           col9: s,
+          col10: tiempoLlegada,
+          col11: tiempoServicio,
+          col12: tiempoTrabajo,
+          col13: tiempoDescanso
         };
   
         data.push(fila);

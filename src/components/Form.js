@@ -19,7 +19,7 @@ const StyleForm = styled.div`
   gap: 20px;
   background-color: white;
 
-  h1, p {
+  h1{
     display: inline;
     margin-right: 5px;
     color: #3f51b5;
@@ -86,7 +86,10 @@ export function Form({ getDatos, getTableEntry }) {
   const [intervDDMin, setIntervDDMin] = useState("");
   const [intervDDMax, setIntervDDMax] = useState("");
 
-  const [hProxAbCola, sethProxAbCola] = useState("");
+  const [intervTECMin, setIntervTECMin] = useState("");
+  const [intervTECMax, setIntervTECMax] = useState("");
+
+  // const [hProxAbCola, sethProxAbCola] = useState("");
 
   const [numberProblem, setNumberProblem] = useState(1);
   const [display, setDisplay] = useState('')
@@ -130,7 +133,6 @@ export function Form({ getDatos, getTableEntry }) {
     <StyleForm displayProp={display} displayP3={displayP3} >
       <div>
         <h1>Simulador de colas</h1>
-        <p>(Problema 1)</p>
       </div>
 
       <div className="button_group" >
@@ -174,11 +176,11 @@ export function Form({ getDatos, getTableEntry }) {
         </div>
       </div>
 
-      <div className='pickers_container p3'>
+      {/* <div className='pickers_container p3'>
         <div className="picker_group p3" >
           <Picker getSeconds={sethProxAbCola} name="Hora de proximo abandono de cola" />
         </div>
-      </div>
+      </div> */}
 
       <div>
         <Subtitle text="Cola inicial" />
@@ -207,16 +209,16 @@ export function Form({ getDatos, getTableEntry }) {
       <div className='pickers_container' >
         <Subtitle text="Intervalo de servicio (s)" />
         <div className="picker_group" >
-          <Picker getSeconds={setIntervServMin} name="Min" formatTime="ss" />
-          <Picker getSeconds={setIntervServMax} name="Max" formatTime="ss" />
+          <Picker getSeconds={setIntervServMin} name="Min" />
+          <Picker getSeconds={setIntervServMax} name="Max" />
         </div>
       </div>
 
       <div className='pickers_container p2' >
         <Subtitle text="Intervalo de duracion de trabajo (s)" />
         <div className="picker_group" >
-          <Picker getSeconds={setIntervDTMin} name="Min" formatTime="ss" />
-          <Picker getSeconds={setIntervDTMax} name="Max" formatTime="ss" />
+          <Picker getSeconds={setIntervDTMin} name="Min" />
+          <Picker getSeconds={setIntervDTMax} name="Max" />
         </div>
       </div>
 
@@ -225,6 +227,14 @@ export function Form({ getDatos, getTableEntry }) {
         <div className="picker_group" >
           <Picker getSeconds={setIntervDDMin} />
           <Picker getSeconds={setIntervDDMax} />
+        </div>
+      </div>
+
+      <div className='pickers_container p3' >
+        <Subtitle text="Intervalo de tiempo de espera del cliente (s)" />
+        <div className="picker_group" >
+          <Picker getSeconds={setIntervTECMin} />
+          <Picker getSeconds={setIntervTECMax} />
         </div>
       </div>
       
@@ -248,7 +258,9 @@ export function Form({ getDatos, getTableEntry }) {
             intervDTMax,
             intervDDMin,
             intervDDMax,
-            hProxAbCola
+            // hProxAbCola,
+            intervTECMin,
+            intervTECMax
           };
           const datos = obtenerDatos(form);
           if(numberProblem === 3){

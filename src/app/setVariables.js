@@ -7,15 +7,15 @@ const setVariables = (problemNumber, colVP3) => {
               accessor: "col1",
             },
             {
-              Header: "Hora Actual",
+              Header: "H Actual",
               accessor: "col2",
             },
             {
-              Header: "Hora de proxima llegada",
+              Header: "H proxima llegada",
               accessor: "col3",
             },
             {
-              Header: "Hora de proximo fin de servicio",
+              Header: "H proximo fin de servicio",
               accessor: "col4",
             },
             {
@@ -26,6 +26,14 @@ const setVariables = (problemNumber, colVP3) => {
               Header: "PS",
               accessor: "col6",
             },
+            {
+              Header: "T legada",
+              accessor: "col7",
+            },
+            {
+              Header: "T servicio",
+              accessor: "col8",
+            },
           ]
     } else if (problemNumber === 2){
         cabecera = [
@@ -34,23 +42,23 @@ const setVariables = (problemNumber, colVP3) => {
               accessor: "col1",
             },
             {
-              Header: "Hora Actual",
+              Header: "H Actual",
               accessor: "col2",
             },
             {
-              Header: "Hora de proxima llegada",
+              Header: "H de proxima llegada",
               accessor: "col3",
             },
             {
-              Header: "Hora de proximo fin de servicio",
+              Header: "H de proximo fin de servicio",
               accessor: "col4",
             },
             {
-              Header: "Hora de comienzo de descanso",
+              Header: "H de comienzo de descanso",
               accessor: "col5",
             },
             {
-              Header: "Hora de vuelta al trabajo",
+              Header: "H de vuelta al trabajo",
               accessor: "col6",
             },
             {
@@ -65,11 +73,26 @@ const setVariables = (problemNumber, colVP3) => {
               Header: "S",
               accessor: "col9",
             },
+            {
+              Header: "T llegada",
+              accessor: "col10",
+            },
+            {
+              Header: "T servicio",
+              accessor: "col11",
+            },
+            {
+              Header: "T trabajo",
+              accessor: "col12",
+            },
+            {
+              Header: "T descanso",
+              accessor: "col13",
+            },
           ]
     } else if (problemNumber === 3){
         let arr = []
         for(let i=1; i<=colVP3; i++){
-        // for(let i=1; i<=20; i++){
             arr.push({
                 Header: `v${i}`,
                 accessor: `v${i}`
@@ -82,19 +105,19 @@ const setVariables = (problemNumber, colVP3) => {
               accessor: "col1",
             },
             {
-              Header: "Hora Actual",
+              Header: "H Actual",
               accessor: "col2",
             },
             {
-              Header: "Hora de proxima llegada",
+              Header: "H de proxima llegada",
               accessor: "col3",
             },
             {
-              Header: "Hora de proximo fin de servicio",
+              Header: "H de proximo fin de servicio",
               accessor: "col4",
             },
             {
-                Header: "Hora de proximo abandono de cola",
+                Header: "H de proximo abandono de cola",
                 accessor: "col5",
               },
             {
@@ -106,23 +129,16 @@ const setVariables = (problemNumber, colVP3) => {
               accessor: "col7",
             },
             {
-                Header: "Horas de abandono",
+              Header: "T llegada",
+              accessor: "col8",
+            },
+            {
+              Header: "T servicio",
+              accessor: "col9",
+            },
+            {
+                Header: "Hs de abandono",
                 columns: arr
-                
-                // [
-                //     {
-                //         Header: "v1",
-                //         accessor: "v1"
-                //     },
-                //     {
-                //         Header: "v2",
-                //         accessor: "v2"
-                //     },
-                //     {
-                //         Header: "v3",
-                //         accessor: "v3"
-                //     }
-                // ]
               },
           ]
     }

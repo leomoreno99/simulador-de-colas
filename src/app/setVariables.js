@@ -1,4 +1,5 @@
 const setVariables = (problemNumber, colVP3) => {
+  console.log(problemNumber)
     let cabecera
     if (problemNumber === 1){
         cabecera = [
@@ -141,7 +142,54 @@ const setVariables = (problemNumber, colVP3) => {
                 columns: arr
               },
           ]
-    }
+    } else if (problemNumber === 4){
+      cabecera = [
+          {
+            Header: "Nro Iteracion",
+            accessor: "col1",
+          },
+          {
+            Header: "H Actual",
+            accessor: "col2",
+          },
+          {
+            Header: "H proxima llegada Cliente A",
+            accessor: "col3",
+          },
+          {
+            Header: "H proxima llegada Cliente B",
+            accessor: "col4",
+          },
+          {
+            Header: "H proximo fin de servicio",
+            accessor: "col5",
+          },
+          {
+            Header: "Qa",
+            accessor: "col6",
+          },
+          {
+            Header: "Qb",
+            accessor: "col7",
+          },
+          {
+            Header: "PS",
+            accessor: "col8",
+          },
+          {
+            Header: "T legada Cliente A",
+            accessor: "col9",
+          },
+          {
+            Header: "T legada Cliente B",
+            accessor: "col10",
+          },
+          {
+            Header: "T servicio",
+            accessor: "col11",
+          },
+        ]
+  }
     return cabecera
 }
 
